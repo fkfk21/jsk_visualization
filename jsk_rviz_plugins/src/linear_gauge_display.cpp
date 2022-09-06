@@ -240,14 +240,15 @@ namespace jsk_rviz_plugins
       uint16_t h = overlay_->getTextureHeight() - caption_offset_;
 
     //draw gauge
+    double range = max_value_ - min_value_;
     if(vertical_gauge_)
     {
-        double normalised_value = std::min(std::max((double)data_, 0.0), max_value_)*(h-2*height_padding_)/max_value_;
+        double normalised_value = std::min(std::max((double)data_-min_value_, 0.0), range)*(h-2*height_padding_)/range;
         painter.fillRect(width_padding_, h-normalised_value-height_padding_, w-2*width_padding_, normalised_value, fg_color);
     }
     else
     {   
-        double normalised_value = std::min(std::max((double)data_, 0.0), max_value_)*(w-2*width_padding_)/max_value_;
+        double normalised_value = std::min(std::max((double)data_-min_value_, 0.0), range)*(w-2*width_padding_)/range;
         painter.fillRect(width_padding_, height_padding_, normalised_value, h-(2*height_padding_), fg_color);
     }
   
